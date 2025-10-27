@@ -1,0 +1,1 @@
+export default function Divider(){return(<div className="divider my-10"><span className="diamond"/></div>)}
