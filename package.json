@@ -14,16 +14,6 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "autoprefixer": "10.4.19",
-    "postcss": "8.4.38",
-    "tailwindcss": "3.4.10",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.5",
-    "typescript": "5.6.2"
-  }
-}
-=======
     "@netlify/plugin-nextjs": "^5.14.3",
     "@types/node": "^24.9.1",
     "@types/react": "^19.2.2",
@@ -32,7 +22,6 @@
     "eslint-config-next": "14.2.5",
     "postcss": "8.4.38",
     "tailwindcss": "3.4.10",
-    "typescript": "^5.9.3"
+    "typescript": "5.9.3"
   }
 }
->>>>>>> b2b092c (Initial clean commit (ignore node_modules and build artifacts))
