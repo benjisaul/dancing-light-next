@@ -1,13 +1,22 @@
 'use client'
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Header(){
   const [open,setOpen]=React.useState(false)
   return (
     <header className="sticky top-0 z-40 backdrop-blur bg-black/30 border-b border-white/10">
       <nav className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="text-xl weight-300 tracking-wide">dancing <span style={{color:'var(--gold)'}}>light</span> <span className="weight-200">films</span></Link>
+        <Link href="/" className="flex items-center">
+          <Image 
+            src="/logo.png" 
+            alt="Dancing Light Films" 
+            width={150} 
+            height={40}
+            className="h-8 w-auto"
+          />
+        </Link>
         <button onClick={()=>setOpen(!open)} className="sm:hidden px-3 py-2 ring-1 ring-white/20 rounded">Menu</button>
         <div className={`gap-6 items-center ${open? 'flex':'hidden'} sm:flex`}>
           <Link href="/about" className="hover:text-white text-zinc-300">About</Link>
