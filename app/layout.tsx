@@ -1,8 +1,10 @@
+
 import './globals.css'
-import { Montserrat } from 'next/font/google'
+import { Montserrat, Manrope } from 'next/font/google'
 import React from 'react'
 
 const mont = Montserrat({ subsets:['latin'], weight:['100','200','300','400','500'] })
+const manrope = Manrope({ subsets:['latin'], weight:['500'], style:['normal'] })
 
 export const metadata = {
   title: 'Dancing Light Films',
@@ -16,7 +18,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }){
         <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"/>
         <script async src="https://assets.calendly.com/assets/external/widget.js"></script>
       </head>
-      <body className={mont.className}>{children}</body>
+      <body className={`${mont.className} bg-[#EDDED1] text-[#0B0B0B]`}>
+  {children}
+  <body className={`${mont.className} bg-[#EDDED1] text-[#0B0B0B]`}>
+  {children}
+</body>
     </html>
   )
 }
