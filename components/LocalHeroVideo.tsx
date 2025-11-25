@@ -1,38 +1,124 @@
 'use client'
+
 import React from 'react'
 
-export default function LocalHeroVideo({poster='/video/showreel-poster.jpg'}:{poster?:string}){
-  const ref = React.useRef<HTMLVideoElement|null>(null)
-  const [muted,setMuted]=React.useState(true)
-  const [hover,setHover]=React.useState(false)
-  React.useEffect(()=>{ if(ref.current){ ref.current.muted = true; ref.current.play().catch(()=>{}); }},[])
+export default function LocalHeroVideo({
+  poster = '/video/showreel-poster.jpg',
+}: {
+  poster?: string
+}) {
+  const ref = React.useRef<HTMLVideoElement | null>(null)
+  const containerRef = React.useRef<HTMLDivElement | null>(null)
+
+  const [muted, setMuted] = React.useState(true)
+  const [hover, setHover] = React.useState(false)
+  const [ready, setReady] = React.useState(false)
+  const [showGradient, setShowGradient] = React.useState(false)
+  const [cursorPos, setCursorPos] = React.useState({ x: 0, y: 0 })
+
+  // autoplay muted
+  React.useEffect(() => {
+    if (ref.current) {
+      ref.current.muted = true
+      ref.current.play().catch(() => {})
+    }
+  }, [])
+
+  // fade gradient on scroll
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setShowGradient(window.scrollY > 60)
+    }
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // track cursor movement
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    setCursorPos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    })
+  }
+
   return (
-    <div className="group relative aspect-video w-full overflow-hidden rounded-2xl ring-1 ring-white/10 bg-black">
-      <video ref={ref} className="absolute inset-0 w-full h-full object-cover" poster={poster} autoPlay muted={muted} loop playsInline preload="auto">
+    <div
+      ref={containerRef}
+      style={{
+        width: '100%',
+        height: '60vh',
+        maxHeight: '700px',
+        overflow: 'hidden',
+        position: 'relative',
+        cursor: 'none',
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onMouseMove={handleMouseMove}
+    >
+      {/* HERO VIDEO */}
+      <video
+        ref={ref}
+        poster={poster}
+        autoPlay
+        muted={muted}
+        loop
+        playsInline
+        preload="auto"
+        onCanPlay={() => setReady(true)}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
+          opacity: ready ? 1 : 0,
+          transform: ready ? 'scale(1)' : 'scale(1.03)',
+          transition: 'opacity 1.2s ease-out, transform 1.2s ease-out',
+        }}
+      >
         <source src="/video/showreel.webm" type="video/webm" />
         <source src="/video/showreel.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/50 to-transparent"/>
-      <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300">
-        <button onClick={()=>{ if(ref.current){ ref.current.muted = !ref.current.muted; setMuted(ref.current.muted); } }}
-          onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)}
-          aria-label={muted?'Unmute':'Mute'}
-          className="h-9 w-9 rounded-full flex items-center justify-center ring-1 transition"
-          style={{ backgroundColor:'rgba(0,0,0,0.35)', color:'#fff', boxShadow: hover? '0 0 12px #E5B979':'0 0 0 transparent', borderColor:'rgba(255,255,255,0.2)'}}>
-          {muted ? (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M3 9v6h4l5 4V5L7 9H3z" />
-              <path d="M19 5L5 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-            </svg>
-          ) : (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M3 9v6h4l5 4V5L7 9H3z" />
-              <path d="M14.5 9.5c1 1 1 2.6 0 3.6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-              <path d="M17 7c2.3 2.3 2.3 7.7 0 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-            </svg>
-          )}
-        </button>
-      </div>
+
+      {/* SCROLL GRADIENT */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '160px',
+          background:
+            'linear-gradient(to bottom, rgba(0,0,0,0) 0%, #E7E6DF 100%)',
+          opacity: showGradient ? 1 : 0,
+          transition: 'opacity 0.7s ease-out',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* ✨ LENS FLARE CURSOR */}
+      {hover && (
+        <div
+          style={{
+            position: 'absolute',
+            top: cursorPos.y - 60,
+            left: cursorPos.x - 60,
+            width: '120px',
+            height: '120px',
+            pointerEvents: 'none',
+            background:
+              'radial-gradient(circle, rgba(255,220,150,0.9) 0%, rgba(255,150,50,0.35) 40%, rgba(255,100,0,0) 70%)',
+            mixBlendMode: 'screen',
+            filter: 'blur(15px)',
+            borderRadius: '50%',
+            transition: 'transform 0.1s ease-out',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      )}
     </div>
   )
 }

@@ -1,105 +1,330 @@
 'use client'
+
 import React from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Divider from '@/components/Divider'
 import LocalHeroVideo from '@/components/LocalHeroVideo'
 import LogoCarousel from '@/components/LogoCarousel'
-import { CalendlyInline } from '@/components/Calendly'
 import Link from 'next/link'
 
-export default function HomePage(){
+export default function HomePage() {
+  const offeringsRef = React.useRef<HTMLDivElement | null>(null)
+  const [offeringsVisible, setOfferingsVisible] = React.useState(false)
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    function handleScroll() {
+      if (!offeringsRef.current) return
+      const rect = offeringsRef.current.getBoundingClientRect()
+      const windowHeight =
+        window.innerHeight || document.documentElement.clientHeight
+
+      // when top of section is within 80% of viewport height → reveal
+      if (rect.top < windowHeight * 0.8) {
+        setOfferingsVisible(true)
+        window.removeEventListener('scroll', handleScroll)
+      }
+    }
+
+    // run once on mount in case user reloads mid-page
+    handleScroll()
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const offerings = [
+    {
+      key: 'express',
+      title: 'Express Your Truth',
+      price: 'Bespoke project',
+      description:
+        'Short-form documentaries and artist films that reveal the depth of your story, mission, or creative essence—capturing the soul behind the vision.',
+      image: '/offerings/express-your-truth.jpg',
+    },
+    {
+      key: 'elevate',
+      title: 'Elevate Your Presence',
+      price: 'Campaign / content suite',
+      description:
+        'Strategic visual content—commercials, campaigns, and social storytelling—that amplifies your brand’s influence and deeply resonates with your audience.',
+      image: '/offerings/elevate-your-presence.jpg',
+    },
+    {
+      key: 'capture',
+      title: 'Capture the Moment',
+      price: 'Event / retreat coverage',
+      description:
+        'Immersive event storytelling for summits, retreats, and transformational gatherings—preserving the magic, emotion, and impact of every moment.',
+      image: '/offerings/capture-the-moment.jpg',
+    },
+  ]
+
   return (
-    <main>
-      <Header/>
+    <main className="min-h-screen bg-[#E7E6DF] text-[#0B0B0B]">
+      <Header />
+
       {/* Hero */}
       <section className="relative">
-        <div className="max-w-6xl mx-auto px-6 pt-10 pb-6 sm:pt-16">
-          <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-[var(--shadow)]">
-            <LocalHeroVideo/>
-          </div>
-          <div className="mt-6 text-center">
-            <Link href="/book" className="inline-flex items-center px-6 py-3 rounded-xl weight-400" style={{backgroundColor:'var(--gold)', color:'#0B0B0B'}}>Book a Strategy Call</Link>
+        <div
+          className="w-full"
+          style={{ paddingTop: '1rem', paddingBottom: '2rem' }}
+        >
+          <div>
+            <LocalHeroVideo />
           </div>
         </div>
       </section>
-
-      <Divider/>
 
       {/* Emotional Problem & Vision */}
-      <section className="max-w-6xl mx-auto px-6 py-10 grid gap-6">
-        <p className="weight-500 text-xl text-center">We help visionary, purpose-led organisations, artists and changemakers uncover their deepest truth and express it with cinematic power—to move hearts and shape culture.</p>
-      </section>
+      <section
+  style={{
+    maxWidth: '72rem',
+    margin: '3.5rem auto 0',
+    padding: '0 4rem 4.5rem',
+    textAlign: 'center',
+  }}
+>
+  <p
+    style={{
+      fontFamily: "'Montserrat', sans-serif",
+      fontWeight: 150,
+      fontSize: 'clamp(1.9rem, 4vw, 3.5rem)',
+      lineHeight: 1.25,
+      marginBottom: '10rem',
+    }}
+  >
+    Heart led video production - 
 
-      <Divider/>
+    empowering visionary, purpose-led organisations, artists and changemakers to express with cinematic power.
+  
+  </p>
+
+  <Link href="#booking" className="strategy-button">
+    Book a Strategy Call
+  </Link>
+</section>
+
+
+      <Divider />
 
       {/* Our Offerings */}
-      <section className="max-w-6xl mx-auto px-6 py-10 grid gap-8">
-        <h2 className="text-2xl weight-500 text-center">Our Offerings</h2>
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div>
-            <h3 className="text-xl weight-500">Express Your Truth</h3>
-            <p className="text-zinc-300">Short-form documentaries and artist films that reveal the depth of your story, mission, or creative essence—capturing the soul behind the vision.</p>
-          </div>
-          <div>
-            <iframe className="w-full aspect-video rounded-2xl ring-1 ring-white/10" src="https://www.youtube-nocookie.com/embed/338ayikxUmc?rel=0&modestbranding=1" title="Aweno: The Return" allowFullScreen/>
+      <section
+        id="offerings"
+        style={{
+          background: '#0F0E0E',
+          color: '#FDFBF7',
+          marginTop: '5rem',
+          marginBottom: '5rem',
+        }}
+      >
+        <div
+          ref={offeringsRef}
+          className={`offerings-shell ${
+            offeringsVisible ? 'offerings-visible' : ''
+          }`}
+          style={{
+            position: 'relative',
+            maxWidth: '72rem',
+            margin: '0 auto',
+            padding: '10rem 2.5rem 10rem',
+            overflow: 'hidden',
+          }}
+        >
+          {/* soft flare in this section only */}
+          <div className="offerings-flare-layer">
+            <div className="offerings-flare" />
           </div>
 
-          <div>
-            <h3 className="text-xl weight-500">Elevate Your Presence</h3>
-            <p className="text-zinc-300">Strategic visual content—commercials, campaigns, and social storytelling—that amplifies your brand’s influence and deeply resonates with your audience.</p>
-          </div>
-          <div className="grid gap-4">
-            <div className="w-full max-w-[420px]"><iframe className="w-full aspect-[9/16] rounded-2xl ring-1 ring-white/10" src="https://www.instagram.com/reel/DFalWvPof6G/embed" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"/></div>
-          </div>
+          <h2
+            style={{
+              textAlign: 'center',
+              marginBottom: '3rem',
+              fontFamily: "'Montserrat', sans-serif",
+              fontWeight: 100,
+              fontSize: '2rem',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              color: '#FDFBF7',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            Our Offerings
+          </h2>
 
-          <div>
-            <h3 className="text-xl weight-500">Capture the Moment</h3>
-            <p className="text-zinc-300">Immersive event storytelling for summits, retreats, and transformational gatherings—preserving the magic, emotion, and impact of every moment.</p>
-          </div>
-          <div>
-            <iframe className="w-full aspect-video rounded-2xl ring-1 ring-white/10" src="https://www.youtube-nocookie.com/embed/PElA1GXz3UY?rel=0&modestbranding=1" title="Medicine Festival" allowFullScreen/>
-          </div>
-        </div>
+          <div
+            style={{
+              display: 'grid',
+              gap: '2.8rem',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            {offerings.map((offer) => (
+              <article key={offer.key}>
+                <Link
+                  href="#booking"
+                  style={{
+                    display: 'block',
+                    overflow: 'hidden',
+                    borderRadius: '0.9rem',
+                    marginBottom: '1.5rem',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                  }}
+                >
+                  <img
+                    src={offer.image}
+                    alt={offer.title}
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      display: 'block',
+                      objectFit: 'cover',
+                      aspectRatio: '4 / 3',
+                      transition: 'transform 0.5s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.04)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)'
+                    }}
+                  />
+                </Link>
 
-        {/* Strategy foundation */}
-        <div className="mt-10 text-center">
-          <div className="flex flex-col items-center mb-4">
-            <div className="h-4 w-4 rotate-45 mb-3" style={{backgroundColor:'var(--maroon)', boxShadow:'0 0 15px #ffffff'}}></div>
-            <h3 className="text-2xl weight-500">The Foundation: Strategy</h3>
-          </div>
-          <p className="text-zinc-300 max-w-2xl mx-auto">Every project begins with deep inquiry and alignment to ensure your story emerges with clarity, authenticity, and transformational impact.</p>
-        </div>
+                <h3
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 400,
+                    fontSize: '1.15rem',
+                    marginBottom: '0.35rem',
+                    color: '#FDFBF7',
+                  }}
+                >
+                  {offer.title}
+                </h3>
 
-        <div className="text-center">
-          <Link href="/portfolio" className="inline-flex items-center px-5 py-3 rounded-xl ring-1 ring-white/20 hover:ring-white/40">View full portfolio</Link>
+                <p
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 300,
+                    fontSize: '0.95rem',
+                    marginBottom: '0.9rem',
+                    color: 'rgba(249,244,235,0.75)',
+                  }}
+                >
+                  {offer.price}
+                </p>
+
+                <p
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 300,
+                    fontSize: '0.95rem',
+                    lineHeight: 1.6,
+                    color: 'rgba(249,244,235,0.9)',
+                  }}
+                >
+                  {offer.description}
+                </p>
+
+                <div
+                  style={{
+                    marginTop: '1.25rem',
+                    height: '2px',
+                    width: '60px',
+                    borderRadius: '999px',
+                    background:
+                      'linear-gradient(90deg, #C97C28 0%, #4C1C32 100%)',
+                  }}
+                />
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <Divider/>
+      <Divider />
 
       {/* Social Proof */}
       <section className="max-w-6xl mx-auto px-6 py-12 grid gap-6">
         <h3 className="text-2xl weight-500">Partners & Clients</h3>
-        <LogoCarousel/>
+        <LogoCarousel />
         <div className="grid md:grid-cols-2 gap-6">
-          <blockquote className="rounded-2xl bg-[#2B2B2B] ring-1 ring-white/10 p-5 text-zinc-300">“Placeholder testimonial… coming soon.”</blockquote>
-          <blockquote className="rounded-2xl bg-[#2B2B2B] ring-1 ring-white/10 p-5 text-zinc-300">“Placeholder testimonial… coming soon.”</blockquote>
+          
         </div>
       </section>
 
-      <Divider/>
+      <Divider />
 
-      {/* CTA + Inline Calendly */}
-      <section className="max-w-6xl mx-auto px-6 py-10 grid gap-6">
-        <h3 className="text-2xl weight-500 text-center">Ready to bring your story to light?</h3>
-        <p className="text-center text-zinc-300">Book a Creative Discovery Call or join our mailing list for inspiration and tools.</p>
-        <div className="mt-4 rounded-2xl overflow-hidden ring-1 ring-white/10 bg-black/40 p-2">
-          <CalendlyInline url="https://calendly.com/benji-dancinglight/30min?hide_gdpr_banner=1" height={700}/>
-        </div>
-      </section>
+      {/* CTA + Booking Button */}
+{/* CTA + Booking Button */}
+<section
+  id="booking"
+  style={{
+    maxWidth: '72rem',
+    margin: '0 auto',
+    padding: '3rem 1.5rem 4rem',
+    textAlign: 'center',
+  }}
+>
+  <h3 className="text-2xl weight-500" style={{ marginBottom: '0.75rem' }}>
+    Ready to bring your story to light?
+  </h3>
 
-      <Footer/>
+  <p
+    style={{
+      marginBottom: '2.5rem',
+      color: '#3f3f3f',
+      fontFamily: "'Montserrat', sans-serif",
+      fontWeight: 300,
+      fontSize: '1rem',
+    }}
+  >
+    Let's see what we can create together. <br />
+    Book a free 30 minute creative Discovery Call directly in my calendar.
+  </p>
+
+  {/* perfectly centred, pill-shaped maroon button */}
+  <Link
+    href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ20boQ0xhmfyrZcW1iuao6mZIQ2ewdlGOd-yZJ6ThfNzhSvHe2ARTrOOPzUVL5kWtUfH7C04HCc"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: 'inline-block',
+      padding: '0.75rem 2.5rem',
+      borderRadius: '999px',          // pill shape
+      border: '2px solid #FFFFFF',    // white outline
+      backgroundColor: '#4C1C32',     // maroon
+      color: '#FFFFFF',
+      fontFamily: "'Montserrat', sans-serif",
+      fontWeight: 300,
+      fontSize: '1rem',
+      textDecoration: 'none',
+      boxShadow: '0 4px 14px rgba(0,0,0,0.12)',
+      transition: 'background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease',
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.backgroundColor = '#6A2A46'   // lighter maroon
+      e.currentTarget.style.transform = 'translateY(-1px)'
+      e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.16)'
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.backgroundColor = '#4C1C32'
+      e.currentTarget.style.transform = 'translateY(0)'
+      e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.12)'
+    }}
+  >
+    Book a Strategy Call
+  </Link>
+</section>
+
+
+
+      <Footer />
     </main>
   )
 }
