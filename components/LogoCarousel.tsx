@@ -3,17 +3,17 @@
 import React from 'react'
 
 const logos = [
-  '/logos/team-love.png',
-  '/logos/medicine-festival.png',
-  '/logos/lovejam.png',
-  '/logos/primal.png',
-  '/logos/north-face.png',
-  '/logos/vivobarefoot.png',
-  '/logos/and-soul.png',
-  '/logos/bath-house.png',
-  '/logos/conscious-buddy.png',
-  '/logos/cross-the-tracks.png',
-  '/logos/inea.png',
+  '/Logos/team-love.png',
+  '/Logos/medicine-festival.png',
+  '/Logos/lovejam.png',
+  '/Logos/primal.png',
+  '/Logos/north-face.png',
+  '/Logos/vivobarefoot.png',
+  '/Logos/and-soul.png',
+  '/Logos/bath-house.png',
+  '/Logos/conscious-buddy.png',
+  '/Logos/cross-the-tracks.png',
+  '/Logos/inea.png',
 ]
 
 // turn "/logos/medicine-festival.jpg" → "Medicine Festival"
