@@ -90,16 +90,29 @@ export default function HomePage() {
     style={{
       fontFamily: "'Montserrat', sans-serif",
       fontWeight: 150,
-      fontSize: 'clamp(1.9rem, 4vw, 3.5rem)',
+      fontSize: 'clamp(1.9rem, 3.5vw, 3.5rem)',
       lineHeight: 1.25,
-      marginBottom: '10rem',
+      marginBottom: '3rem',
     }}
   >
-    Heart led video production - 
-
-    empowering visionary, purpose-led organisations, artists and changemakers to express with cinematic power.
-  
+    Purpose-driven filmmaking for change-makers, artists and conscious brands.
   </p>
+
+  <p
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 300,
+            fontSize: '1rem',
+            lineHeight: 1.6,
+            maxWidth: '40rem',
+            margin: '0 auto 2.75rem',
+            color: '#3f3f3f',
+          }}
+        >
+          We turn your purpose into cinematic storytelling that moves audiences. With a process
+          rooted in care, clarity and co-creation, we help you express your mission with
+          confidence, creativity and impact.
+        </p>
 
   <Link href="#booking" className="strategy-button">
     Book a Strategy Call
@@ -145,7 +158,6 @@ export default function HomePage() {
               fontWeight: 100,
               fontSize: '2rem',
               letterSpacing: '0.06em',
-              textTransform: 'uppercase',
               color: '#FDFBF7',
               position: 'relative',
               zIndex: 1,
