@@ -9,7 +9,6 @@ const logos = [
   '/logos/primal.png',
   '/logos/north-face.png',
   '/logos/vivobarefoot.png',
-  '/logos/arts-council-england.png',
   '/logos/and-soul.png',
   '/logos/bath-house.png',
   '/logos/conscious-buddy.png',
