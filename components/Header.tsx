@@ -78,7 +78,7 @@ export default function Header() {
           }}
         >
           {[
-            { href: "#offerings", label: 'Services' },
+            { href: '/#offerings', label: 'Services' },   // ← change here
             { href: '/about', label: 'About' },
             { href: 'mailto:benji@dancinglight.co.uk', label: 'Contact' },
           ].map((item) => (
@@ -91,10 +91,10 @@ export default function Header() {
                 transition: 'all 0.25s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#C97C28'          // GOLD
+                e.currentTarget.style.color = '#C97C28'
                 e.currentTarget.style.textShadow =
-                  '0 0 6px rgba(201,124,40,0.35)'                // GLOW
-                e.currentTarget.style.transform = 'scale(1.05)'   // ENLARGE
+                  '0 0 6px rgba(201,124,40,0.35)'
+                e.currentTarget.style.transform = 'scale(1.05)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.color = '#0B0B0B'

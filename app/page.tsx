@@ -40,7 +40,7 @@ export default function HomePage() {
       title: 'Express Your Truth',
       price: 'Bespoke project',
       description:
-        'Short-form documentaries and artist films that reveal the depth of your story, mission, or creative essence—capturing the soul behind the vision.',
+        'Short-form documentaries and artist films that reveal the depth of your story, mission, or creative essence - capturing the soul behind the vision.',
       image: '/offerings/express-your-truth.jpg',
     },
     {
@@ -48,7 +48,7 @@ export default function HomePage() {
       title: 'Elevate Your Presence',
       price: 'Campaign / content suite',
       description:
-        'Strategic visual content—commercials, campaigns, and social storytelling—that amplifies your brand’s influence and deeply resonates with your audience.',
+        'Strategic visual content - commercials, campaigns, and social storytelling -that amplifies your brand’s influence and deeply resonates with your audience.',
       image: '/offerings/elevate-your-presence.jpg',
     },
     {
@@ -56,7 +56,7 @@ export default function HomePage() {
       title: 'Capture the Moment',
       price: 'Event / retreat coverage',
       description:
-        'Immersive event storytelling for summits, retreats, and transformational gatherings—preserving the magic, emotion, and impact of every moment.',
+        'Immersive event storytelling for summits, retreats, and transformational gatherings - preserving the magic, emotion, and impact of every moment.',
       image: '/offerings/capture-the-moment.jpg',
     },
   ]
